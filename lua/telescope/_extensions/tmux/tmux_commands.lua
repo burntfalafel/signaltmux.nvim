@@ -30,13 +30,23 @@ tmux_commands.list_sessions = function(opts)
  return tutils.get_os_command_output(cmd)
 end
 
-tmux_commands.list_panes = function(opts)
-  local cmd = {'tmux', 'list-panes'}
-  if opts.format ~= nil then
-    table.insert(cmd, "-F")
-    table.insert(cmd, opts.format)
-    end
-  return tutils.get_os_command_output(cmd)
+tmux_commands.send_previous_command = function(opts)
+  local command_output, ret, stderr = tutils.get_os_command_output({
+    'zsh', '-c', 'echo $LAST_COMMAND'
+  })
+
+  if ret ~= 0 then
+    error("Error fetching previous command: " .. table.concat(stderr, "\n"))
+    return
+  end
+
+  -- Strip any trailing newlines or spaces
+  local last_command = command_output[1]:gsub("%s+$", "")
+
+  local tmux_command = string.format("tmux send-keys -t %s:%s.%s '%s' C-m",
+  opts.session, opts.window, opts.pane, last_command)
+
+  return tutils.get_os_command_output({'zsh', '-c', tmux_command})
 end
 
 return tmux_commands
