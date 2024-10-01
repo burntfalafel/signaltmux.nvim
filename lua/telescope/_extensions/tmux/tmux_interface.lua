@@ -1,4 +1,4 @@
-local tmux_cmds = require 'tmux.tmux_commands'
+local tmux_cmds = require'telescope._extensions.tmux.tmux_commands'
 local pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local conf = require("telescope.config").values

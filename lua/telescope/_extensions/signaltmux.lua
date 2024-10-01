@@ -1,6 +1,6 @@
 local telescope = require('telescope')
 
-local interface = require('tmux.tmux_interface')
+local interface = require'telescope._extensions.tmux.tmux_interface'
 --[[
 The idea is:
 lua require("signaltmux").signal(pane, command)
