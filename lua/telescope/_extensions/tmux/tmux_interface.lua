@@ -42,7 +42,7 @@ local get_panes = function(opts)
           -- TODO: make the display prefix prettier
           display = result.session .. ":" .. result.window .. "." .. result.pane,
           ordinal = result.pane,
-          valid = result.pane ~= current_pane
+          valid = result.pane
         }
       end
     },
